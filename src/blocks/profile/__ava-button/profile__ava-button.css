@@ -1,0 +1,16 @@
+.profile__ava-button{
+  margin: 0;
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  background-image: url(../../../images/ava-edit.png);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 26px;
+  background-color: rgba(0,0,0,.8);
+  border: none;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}

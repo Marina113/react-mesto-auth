@@ -1,0 +1,12 @@
+.elements__item{
+  margin: 0;
+  width: 282px;
+  height: 361px;
+  display: flex;
+  flex-direction: column;
+  background-image: url(../../../images/elements-fon.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+  position: relative;
+}

@@ -1,0 +1,17 @@
+.elements__like{
+  margin: 0;
+  padding: 0;
+  min-width: 23px;
+  height: 19px;
+  border: none;
+  background-image: url(../../../images/like-white.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+}
+
+.elements__like:hover{
+  cursor: pointer;
+  opacity: 0.5;
+  transform: scale(1.3);
+}

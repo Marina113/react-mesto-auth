@@ -1,0 +1,16 @@
+.profile__ava-box{
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  position: relative;
+}
+
+.profile__ava-box:hover .profile__ava-button{  
+  opacity: 1;
+}
+
+@media screen and (min-width: 320px) and (max-width:901px){
+  .profile__ava-box{
+    margin: 0 auto 26px;
+  }
+}

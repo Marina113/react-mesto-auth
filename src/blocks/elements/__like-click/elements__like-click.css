@@ -1,0 +1,15 @@
+.elements__like-click{
+  margin: 0;
+  padding: 0;
+  max-width: 23px;
+  height: 13px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #000000;
+  margin-top: 3px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

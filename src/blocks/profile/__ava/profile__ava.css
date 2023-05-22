@@ -1,0 +1,15 @@
+.profile__ava{
+  margin: 0;
+  height: 120px;
+  width: 120px;
+  object-fit:cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 320px) and (max-width:901px){
+  .profile__ava{
+    align-self: center;
+    
+  }
+}

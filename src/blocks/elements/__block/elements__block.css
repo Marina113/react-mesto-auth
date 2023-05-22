@@ -1,0 +1,11 @@
+.elements__block{
+  margin: 0;
+  margin: 25px 15px 31px 21px;
+  max-width: 246px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  gap: 15px;
+}
