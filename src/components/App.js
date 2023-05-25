@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import {
+    Routes,
+    Route,
+    Navigate,
+    useNavigate,
+    useLocation,
+} from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
@@ -19,7 +25,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-    const [selectedCard, setSelectedCard] = useState([]); //открытие попапа просмотра
+    const [selectedCard, setSelectedCard] = useState({}); //открытие попапа просмотра
     const [currentUser, setCurrentUser] = useState("");
     const [cards, setCards] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,7 +36,7 @@ function App() {
         success: false,
     });
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState("");
 
     useEffect(() => {
         api.getUserInfo()
@@ -50,57 +56,58 @@ function App() {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [isLoggedIn]);
 
     useEffect(() => {
         handleTokenCheck();
-      }, [])
-    
-      const handleTokenCheck = () => {
-        if (localStorage.getItem('token')){
-        const token = localStorage.getItem('token')
-        auth.getContent(token)
-            .then((data) => {
-                if (data){
-                    setIsLoggedIn(true);
-                    setUserData(data);
-                    setEmail(data.data.email)
-                    navigate(location.pathname);
-                    // navigate("/main", {replace: true})
-                }
-                else{
-                    setIsLoggedIn(false);
-                }
-          });
-      }
-      }
+    }, []);
 
-    function handleLogin (email, password) {
+    const handleTokenCheck = () => {
+        if (localStorage.getItem("token")) {
+            const token = localStorage.getItem("token");
+            auth.getContent(token)
+                .then((data) => {
+                    if (data) {
+                        setIsLoggedIn(true);
+                        setUserData(data);
+                        setEmail(data.data.email);
+                        navigate(location.pathname);
+                    } else {
+                        setIsLoggedIn(false);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
+    function handleLogin(email, password) {
         auth.login(email, password)
-        .then((data) => {
-            localStorage.setItem("token",data.token);
-            setIsLoggedIn(true);
-            setUserData(data);
-            navigate("/main");
-        })
-        .catch((err) => {
-            console.log(err);
-            handleInfoTooltip(false);
-        });
-    };
+            .then((data) => {
+                localStorage.setItem("token", data.token);
+                setIsLoggedIn(true);
+                setUserData(data);
+                navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                handleInfoTooltip(false);
+            });
+    }
 
-    function handleRegister (email, password) {
+    function handleRegister(email, password) {
         auth.register(email, password)
-        .then(() => {
-            // setInfoTooltip(true);
-            handleInfoTooltip(true);
-            navigate("/signin");
-        })
-        .catch((err) => {
-            console.log(err);
-            handleInfoTooltip(false);
-        });
-    };
+            .then(() => {
+                // setInfoTooltip(true);
+                handleInfoTooltip(true);
+                navigate("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                handleInfoTooltip(false);
+            });
+    }
 
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(true);
@@ -185,8 +192,7 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setSelectedCard({});
-        setInfoTooltip({isOpen: false,
-            success: false,})
+        setInfoTooltip({ isOpen: false, success: false });
     }
 
     return (
@@ -194,31 +200,30 @@ function App() {
             <div className="App">
                 <div className="body">
                     <div className="page">
-                        <Header 
-                        email={email}/>
+                        <Header email={email} />
                         <Routes>
                             <Route
-                                path="/main"
+                                path="/"
                                 element={
                                     <ProtectedRouteElement
                                         element={Main}
                                         isLoggedIn={isLoggedIn}
                                         userData={userData}
-                                onEditAvatar={handleEditAvatarClick}
-                                onEditProfile={handleEditProfileClick}
-                                onAddPlace={handleAddPlaceClick}
-                                onCardClick={handleCardClick}
-                                onCardLike={handleCardLike}
-                                onCardDelete={handleCardDelete}
-                                cards={cards}
-                                />
+                                        onEditAvatar={handleEditAvatarClick}
+                                        onEditProfile={handleEditProfileClick}
+                                        onAddPlace={handleAddPlaceClick}
+                                        onCardClick={handleCardClick}
+                                        onCardLike={handleCardLike}
+                                        onCardDelete={handleCardDelete}
+                                        cards={cards}
+                                    />
                                 }
                             />
                             <Route
-                                path="/"
+                                path="*"
                                 element={
                                     isLoggedIn ? (
-                                        <Navigate to="/main" replace />
+                                        <Navigate to="/" replace />
                                     ) : (
                                         <Navigate to="/signin" replace />
                                     )
@@ -234,12 +239,11 @@ function App() {
                                 path="/signin"
                                 element={<Login handleLogin={handleLogin} />}
                             />
-                            <Route path="*" element={<h2>Not found</h2>} />
                         </Routes>
                         <Footer />
-                        <InfoTooltip 
-                        onClose={closeAllPopups}
-                        result={isInfoTooltip}
+                        <InfoTooltip
+                            onClose={closeAllPopups}
+                            result={isInfoTooltip}
                         />
                         <EditProfilePopup
                             isOpen={isEditProfilePopupOpen}
