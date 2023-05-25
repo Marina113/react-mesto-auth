@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link} from "react-router-dom";
 
-function Register() {
-    const [formValue, setFormValue] = useState("");
+function Register({handleRegister}) {
 
     // const [errorMessage, setErrorMessage] = useState("");
-    
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValue({
-            ...formValue,
-            [name]: value,
-        });
-    };
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+  
+    function handleChangeEmail(evt) {
+      setEmail(evt.target.value);
+    }
+  
+    function handleChangePassword(evt) {
+      setPassword(evt.target.value); 
+    }
     
     const handleSubmit = (e) => {
-        // const {email, password} = formValue
         e.preventDefault();
-        // handleRegister(email, password);
-        // .catch((e) => setErrorMessage(e));
+        handleRegister(email, password);
     };
 
     return (
@@ -26,12 +26,12 @@ function Register() {
             <h2 className="register__title">Регистрация</h2>
             <form onSubmit={handleSubmit} className="register__form">
                 <input
-                    id="register-input"
+                    id="email-input"
                     type="email"
                     className="register__input"
-                    value={formValue.email}
+                    value={email}
                     placeholder="Email"
-                    onChange={handleChange}
+                    onChange={handleChangeEmail}
                     minLength="2"
                     maxLength="40"
                     autoComplete="off"
@@ -42,8 +42,8 @@ function Register() {
                     type="password"
                     className="register__input"
                     placeholder="Пароль"
-                    value={formValue.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={handleChangePassword}
                     minLength="2"
                     maxLength="12"
                     autoComplete="off"

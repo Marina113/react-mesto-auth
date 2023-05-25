@@ -1,27 +1,21 @@
-import React from "react";
 import { useState} from "react";
-import { useNavigate } from "react-router-dom";
-import * as auth from "../utils/auth";
 
 function Login({handleLogin}) {
-    const [formValue, setFormValue] = useState("");
-    const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValue({
-            ...formValue,
-            [name]: value,
-        });
-    };
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+  
+    function handleChangeEmail(evt) {
+      setEmail(evt.target.value);
+    }
+  
+    function handleChangePassword(evt) {
+      setPassword(evt.target.value); 
+    }
 
     function handleSubmit(e) {
-        const {email, password} = formValue;
         e.preventDefault();
         handleLogin(email, password);
-    //     if (!formValue.email || !formValue.password){
-    //         return;
-    // }
 }
 
     return (
@@ -32,9 +26,9 @@ function Login({handleLogin}) {
                     id="login-input"
                     type="email"
                     className="login__input"
-                    value={formValue.email}
+                    value={email}
                     placeholder="Email"
-                    onChange={handleChange}
+                    onChange={handleChangeEmail}
                     minLength="2"
                     maxLength="40"
                     autoComplete="off"
@@ -45,8 +39,8 @@ function Login({handleLogin}) {
                     type="password"
                     className="login__input"
                     placeholder="Пароль"
-                    value={formValue.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={handleChangePassword}
                     minLength="2"
                     maxLength="12"
                     autoComplete="off"

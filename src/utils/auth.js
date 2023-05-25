@@ -33,26 +33,7 @@ export const login = (email, password) => {
   .catch((err) => console.log(err));
 };
 
-export const checkTokenNew = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(token)
-  })
-  .then((response => response.json()))
-  .then((data) => {
-    if (data.jwt){
-      localStorage.setItem('jwt', data.jwt);
-      return data;
-    }
-  })
-  .catch(err => console.log(err))
-};
-
-export const checkToken = (token) => {
+export const getContent= (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {

@@ -1,7 +1,7 @@
 import successImage from "../images/success.jpg";
 import failImage from "../images/fail.jpg";
 
-function InfoTooltip({ isOpen, onClose, success }) {
+function InfoTooltip({ onClose, result: {isOpen, success}}) {
     return (
         <div
             className={`popup popup_type_info ${isOpen ? "popup_opened" : ""}`}
