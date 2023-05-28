@@ -39,6 +39,7 @@ function App() {
     const [email, setEmail] = useState("");
 
     useEffect(() => {
+        if(isLoggedIn){
         api.getUserInfo()
             .then((data) => {
                 setCurrentUser(data);
@@ -46,9 +47,11 @@ function App() {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+        }
+    }, [isLoggedIn]);
 
     useEffect(() => {
+        if(isLoggedIn){
         api.getInitialCards()
             .then((data) => {
                 setCards(data);
@@ -56,6 +59,7 @@ function App() {
             .catch((err) => {
                 console.log(err);
             });
+        }
     }, [isLoggedIn]);
 
     useEffect(() => {
@@ -63,8 +67,8 @@ function App() {
     }, []);
 
     const handleTokenCheck = () => {
-        if (localStorage.getItem("token")) {
-            const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token");
+        if (token) {
             auth.getContent(token)
                 .then((data) => {
                     if (data) {
@@ -87,6 +91,7 @@ function App() {
             .then((data) => {
                 localStorage.setItem("token", data.token);
                 setIsLoggedIn(true);
+                setEmail(email);
                 setUserData(data);
                 navigate("/");
             })
@@ -99,7 +104,6 @@ function App() {
     function handleRegister(email, password) {
         auth.register(email, password)
             .then(() => {
-                // setInfoTooltip(true);
                 handleInfoTooltip(true);
                 navigate("/signin");
             })
@@ -107,6 +111,13 @@ function App() {
                 console.log(err);
                 handleInfoTooltip(false);
             });
+    }
+
+    function signOut(){
+        localStorage.removeItem("token");
+        setEmail("");
+        setIsLoggedIn(false);
+        navigate('/signin');
     }
 
     function handleEditAvatarClick() {
@@ -200,7 +211,8 @@ function App() {
             <div className="App">
                 <div className="body">
                     <div className="page">
-                        <Header email={email} />
+                        <Header email={email}
+                        signOut={signOut} />
                         <Routes>
                             <Route
                                 path="/"
